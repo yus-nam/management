@@ -19,7 +19,7 @@
                     <th>在庫数</th>
                     <th>コメント</th>
                     <th>商品画像</th>
-                    <th>操作</th>
+                    <!-- <th>操作</th> -->
                 </tr>
             </thead>
             <tbody>

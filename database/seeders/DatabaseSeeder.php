@@ -10,7 +10,7 @@ class DatabaseSeeder extends Seeder
     /**
      * Seed the application's database.
      */
-    public function run(): void
+    public function run()
     {
         // \App\Models\User::factory(10)->create();
 
@@ -18,5 +18,10 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+
+        //Seederファイルの呼び出し
+        $this->call(ProductsTableSeeder::class);
+        $this->call(CompaniesTableSeeder::class);
+        $this->call(SalesTableSeeder::class);
     }
 }
