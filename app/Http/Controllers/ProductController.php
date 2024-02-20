@@ -13,6 +13,9 @@ class ProductController extends Controller //コントローラークラスを�
     
     public function index()
     {
+        //ページネート
+        $products = Product::paginate(10);
+
         // 全ての商品情報の取得
         $products = Product::all(); 
 
