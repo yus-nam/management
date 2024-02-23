@@ -56,15 +56,25 @@
         <h2>商品情報</h2>
         <table class="table table-striped">
             <thead>
-                <tr>
-                    <th>商品名</th>
-                    <th>メーカー</th>
-                    <th>価格</th>
-                    <th>在庫数</th>
-                    <th>コメント</th>
-                    <th>商品画像</th>
-                    <th>操作</th>
-                </tr>
+
+            <tr>
+                <th>商品名</th>
+                <th>メーカー</th>
+                <th>価格
+                    <a href="{{ request()->fullUrlWithQuery(['sort' => 'price', 'direction' => 'asc']) }}">↑</a>
+                    <a href="{{ request()->fullUrlWithQuery(['sort' => 'price', 'direction' => 'desc']) }}">↓</a>
+                </th>
+                <th>
+                在庫数
+                    <a href="{{ request()->fullUrlWithQuery(['sort' => 'stock', 'direction' => 'asc']) }}">↑</a>
+                    <a href="{{ request()->fullUrlWithQuery(['sort' => 'stock', 'direction' => 'desc']) }}">↓</a>
+                </th>
+                <th>コメント</th>
+                <th>商品画像</th>
+                <th>操作</th>
+            </tr>
+
+
             </thead>
             <tbody>
             @foreach ($products as $product)
@@ -91,7 +101,7 @@
         </table>
     </div>
 
-
+    {{ $products->appends(request()->query())->links() }}
 
 </div>
 @endsection

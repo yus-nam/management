@@ -11,18 +11,56 @@ use Illuminate\Http\Request; // Requestクラスという機能を使えるよ�
 class ProductController extends Controller //コントローラークラスを継承します（コントローラーの機能が使えるようになります）
 {
     
-    public function index()
+    public function index(Request $request)
     {
-        //ページネート
-        $products = Product::paginate(10);
-
-        // 全ての商品情報の取得
-        $products = Product::all(); 
-
-        // 商品一覧画面の表示
-        return view('products.index', compact('products'));
-
+        // Productモデルに基づいてクエリビルダを初期化
+        $query = Product::query();
+        // この行の後にクエリを逐次構築していきます。
+        // そして、最終的にそのクエリを実行するためのメソッド（例：get(), first(), paginate() など）を呼び出すことで、データベースに対してクエリを実行します。
+    
+        // 商品名の検索キーワードがある場合、そのキーワードを含む商品をクエリに追加
+        if($search = $request->search){
+            $query->where('product_name', 'LIKE', "%{$search}%");
+        }
+    
+        // 最小価格が指定されている場合、その価格以上の商品をクエリに追加
+        if($min_price = $request->min_price){
+            $query->where('price', '>=', $min_price);
+        }
+    
+        // 最大価格が指定されている場合、その価格以下の商品をクエリに追加
+        if($max_price = $request->max_price){
+            $query->where('price', '<=', $max_price);
+        }
+    
+        // 最小在庫数が指定されている場合、その在庫数以上の商品をクエリに追加
+        if($min_stock = $request->min_stock){
+            $query->where('stock', '>=', $min_stock);
+        }
+    
+        // 最大在庫数が指定されている場合、その在庫数以下の商品をクエリに追加
+        if($max_stock = $request->max_stock){
+            $query->where('stock', '<=', $max_stock);
+        }
+    
+        // ソートのパラメータが指定されている場合、そのカラムでソートを行う
+        if($sort = $request->sort){
+            $direction = $request->direction == 'desc' ? 'desc' : 'asc'; 
+    // もし $request->direction の値が 'desc' であれば、'desc' を返す。
+    // そうでなければ'asc' を返す
+            $query->orderBy($sort, $direction);
+    // orderBy('カラム名', '並び順')
+    
+        }
+    
+        // 上記の条件(クエリ）に基づいて商品を取得し、10件ごとのページネーションを適用
+        $products = $query->paginate(10)->appends($request->all());
+    
+    
+        // 商品一覧ビューを表示し、取得した商品情報をビューに渡す
+        return view('products.index', ['products' => $products]);
     }
+
 
     public function create()
     {
