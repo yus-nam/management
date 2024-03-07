@@ -163,7 +163,10 @@ class ProductController extends Controller //コントローラークラスを�
         // 全ての処理が終わったら、商品一覧画面にリダイレクト
         return redirect('/products');
         //URLの/productsを検索します
-        //products　/がなくても検索できます
+        //products/がなくても検索できます
     }
 }
+
+
+
 
