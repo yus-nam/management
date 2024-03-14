@@ -7,6 +7,9 @@ use App\Models\Product; // Productモデルを現在のファイルで使用で�
 use App\Models\Company; // Companyモデルを現在のファイルで使用できるようにするための宣言です。
 use Illuminate\Http\Request; // Requestクラスという機能を使えるように宣言します
 // Requestクラスはブラウザに表示させるフォームから送信されたデータをコントローラのメソッドで引数として受け取ることができます。
+use DB;
+
+
 
 class ProductController extends Controller //コントローラークラスを継承します（コントローラーの機能が使えるようになります）
 {
@@ -50,7 +53,6 @@ class ProductController extends Controller //コントローラークラスを�
     // そうでなければ'asc' を返す
             $query->orderBy($sort, $direction);
     // orderBy('カラム名', '並び順')
-    
         }
     
         // 上記の条件(クエリ）に基づいて商品を取得し、10件ごとのページネーションを適用
@@ -60,7 +62,6 @@ class ProductController extends Controller //コントローラークラスを�
         // 商品一覧ビューを表示し、取得した商品情報をビューに渡す
         return view('products.index', ['products' => $products]);
     }
-
 
     public function create()
     {
@@ -94,6 +95,17 @@ class ProductController extends Controller //コントローラークラスを�
             'stock' => $request->get('stock'),
             'comment' => $request->get('comment'),
         ]);
+
+
+    //トランザクション開始
+    DB::beginTrasnsaction();
+    try{
+        //⑤モデルのregistArticle関数を呼び出し。
+        $model->registArticle($image_path);
+        DB::commit();
+    } catch(Exception $e) {
+        DB::rollBack();
+    };
 
         // 画像保存
         if($request->hasFile('img_path')){ 
@@ -166,7 +178,3 @@ class ProductController extends Controller //コントローラークラスを�
         //products/がなくても検索できます
     }
 }
-
-
-
-
