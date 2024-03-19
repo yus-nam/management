@@ -107,6 +107,7 @@ class ProductController extends Controller //コントローラークラスを�
         DB::rollBack();
     };
 
+
         // 画像保存
         if($request->hasFile('img_path')){ 
             $filename = $request->img_path->getClientOriginalName();
