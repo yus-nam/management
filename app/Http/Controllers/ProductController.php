@@ -99,10 +99,20 @@ class ProductController extends Controller //コントローラークラスを�
 
     //トランザクション開始
     DB::beginTrasnsaction();
+
     try{
-        //⑤モデルのregistArticle関数を呼び出し。
-        $model->registArticle($image_path);
+
+        // //⑤モデルのregistArticle関数を呼び出し。
+        // $model = new Article();
+        // $model->registArticle($request);
+        // DB::commit();
+
+        //⑤モデルのregistProduct関数を呼び出し。
+        $model = new Product();
+        $model->registProduct($request);
         DB::commit();
+
+
     } catch(Exception $e) {
         DB::rollBack();
     };
