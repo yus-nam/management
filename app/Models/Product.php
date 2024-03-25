@@ -35,25 +35,16 @@ class Product extends Model
         return $this->belongsTo(Company::class);
     }
 
-    // public function registArticle($data) {
-    //     // 登録処理
-    //     DB::table('articles')->insert([
-    //         'title' => $data->title,
-    //         'url' => $data->url,
-    //         'comment' => $data->comment,
-    //     ]);
-    // }
-
-    public function registProduct($data) {
+    public function registProduct($request) {
         // 登録処理
         DB::table('products')->insert([
 
-            'product_name' => $data->product_name,
-            'price' => $data->price,
-            'stock' => $data->stock,
-            'company_id' => $data->company_id,
-            'comment' => $data->comment,
-            'img_path' => $img->product_path,
+            'product_name' => $request->product_name,
+            'price' => $request->price,
+            'stock' => $request->stock,
+            'company_id' => $request->company_id,
+            'comment' => $request->comment,
+            'img_path' => $request->img_path,
 
         ]);
     }

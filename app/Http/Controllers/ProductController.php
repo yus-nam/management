@@ -97,25 +97,25 @@ class ProductController extends Controller //コントローラークラスを�
         ]);
 
 
-    //トランザクション開始
-    DB::beginTrasnsaction();
+    // //トランザクション開始
+    // DB::beginTrasnsaction();
 
-    try{
+    // try{
 
-        // //⑤モデルのregistArticle関数を呼び出し。
-        // $model = new Article();
-        // $model->registArticle($request);
-        // DB::commit();
+    //     // //⑤モデルのregistArticle関数を呼び出し。
+    //     // $model = new Article();
+    //     // $model->registArticle($request);
+    //     // DB::commit();
 
-        //⑤モデルのregistProduct関数を呼び出し。
-        $model = new Product();
-        $model->registProduct($request);
-        DB::commit();
+    //     //⑤モデルのregistProduct関数を呼び出し。
+    //     $model = new Product();
+    //     $model->registProduct($request);
+    //     DB::commit();
 
 
-    } catch(Exception $e) {
-        DB::rollBack();
-    };
+    // } catch(Exception $e) {
+    //     DB::rollBack();
+    // };
 
 
         // 画像保存
